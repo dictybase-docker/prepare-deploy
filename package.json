@@ -25,7 +25,8 @@
   "author": "dictyBase",
   "license": "MIT",
   "dependencies": {
-    "@actions/core": "^1.2.0"
+    "@actions/core": "^1.2.0",
+    "@actions/github": "^2.2.0"
   },
   "devDependencies": {
     "@types/jest": "^25.2.3",
@@ -42,6 +43,6 @@
     "js-yaml": "^3.13.1",
     "prettier": "^2.0.5",
     "ts-jest": "^26.0.0",
-    "typescript": "~3.8.3"
+    "typescript": "^3.8.3"
   }
 }
