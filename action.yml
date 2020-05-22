@@ -26,6 +26,9 @@ inputs:
   ref:
     description: 'Name of a specific branch, sha or tag that are requested to be deployed'
     required: true
+  token:
+    description: 'github token for interacting with github api'
+    required: true
 runs:
   using: 'node12'
   main: 'dist/index.js'
