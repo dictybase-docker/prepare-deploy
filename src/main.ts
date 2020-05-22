@@ -11,6 +11,7 @@ async function run(): Promise<void> {
       "namespace",
       "image-repository",
       "image-tag",
+      "ref",
     ]
     inputs.forEach(input => console.log(`${input} == ${core.getInput(input)}`))
     // Get the JSON webhook payload for the event that triggered the workflow

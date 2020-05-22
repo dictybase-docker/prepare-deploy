@@ -23,6 +23,9 @@ inputs:
   image-tag:
     description: 'Docker image tag'
     required: true
+  ref:
+    description: 'Name of a specific branch, sha or tag that are requested to be deployed'
+    required: true
 runs:
   using: 'node12'
   main: 'dist/index.js'
