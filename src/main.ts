@@ -3,17 +3,6 @@ import * as github from "@actions/github"
 
 async function run(): Promise<void> {
   try {
-    const inputs = [
-      "cluster-name",
-      "cluster-zone",
-      "chart-name",
-      "chart-path",
-      "namespace",
-      "image-repository",
-      "image-tag",
-      "ref",
-      "token",
-    ]
     const octokit = new github.GitHub(core.getInput("token"), {
       required: true,
     })
