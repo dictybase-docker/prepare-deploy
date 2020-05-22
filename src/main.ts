@@ -9,7 +9,7 @@ async function run(): Promise<void> {
       "chart-name",
       "chart-path",
       "namespace",
-      "image-repo",
+      "image-repository",
       "image-tag",
     ]
     inputs.forEach(input => console.log(`${input} == ${core.getInput(input)}`))
