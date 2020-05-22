@@ -1,0 +1,48 @@
+  {
+    "plugins": [
+      "jest",
+      "@typescript-eslint",
+      "prettier"
+    ],
+    "extends": [
+      "prettier"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "ecmaVersion": 9,
+      "sourceType": "module",
+      "project": "./tsconfig.json"
+    },
+    "rules": {
+      "quotes": [
+        "error",
+        "double"
+      ],
+      "semi": [
+        "error",
+        "never"
+      ],
+      "no-console": [
+        "error",
+        {
+          "allow": [
+            "log",
+            "warn",
+            "error"
+          ]
+        }
+      ],
+      "arrow-body-style": [
+        "error",
+        "as-needed"
+      ],
+      "prettier/prettier": [
+        "error"
+      ]
+    },
+    "env": {
+      "node": true,
+      "es6": true,
+      "jest/globals": true
+    }
+  }
