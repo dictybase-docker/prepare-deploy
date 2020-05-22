@@ -2,29 +2,26 @@ name: 'Prepare Deployment'
 description: 'Typescript action to prepare dictyBase software for deployment'
 author: 'dictyBase'
 inputs:
-  clusterName:
+  cluster-name:
     description: 'Name of Kubernetes cluster'
     required: true
-  clusterZone:
+  cluster-zone:
     description: 'Kubernetes regional cluster'
     default: 'us-central1-a'
-  chartName:
+  chart-name:
     description: 'Name of Helm chart'
     required: true
-  chartPath:
+  chart-path:
     description: 'Path to Helm chart'
     required: true
   namespace:
     description: 'Namespace used in cluster'
     required: true
-  imageRepo:
+  image-repo:
     description: 'Docker image repository'
     required: true
-  imageTag:
+  image-tag:
     description: 'Docker image tag'
-    required: true
-  commitID:
-    description: 'GitHub commit ID'
     required: true
 runs:
   using: 'node12'
