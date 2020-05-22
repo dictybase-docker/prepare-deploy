@@ -17,7 +17,7 @@ inputs:
   namespace:
     description: 'Namespace used in cluster'
     required: true
-  image-repo:
+  image-repository:
     description: 'Docker image repository'
     required: true
   image-tag:
