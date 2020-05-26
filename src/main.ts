@@ -8,13 +8,13 @@ async function run(): Promise<void> {
     })
     const { repo, owner } = github.context.repo
     const ref = core.getInput("ref", { required: true })
-    const resp = octokit.repos.createDeployment({
+    const resp = await octokit.repos.createDeployment({
       owner: owner,
       repo: repo,
       ref: ref,
       auto_merge: false,
       required_contexts: [],
-      description: "deploy request from dictybaseBot",
+      description: "deploy request from dictybasebot",
       payload: JSON.stringify({
         cluster: core.getInput("cluster-name", { required: true }),
         zone: core.getInput("cluster-zone", { required: true }),
@@ -24,7 +24,7 @@ async function run(): Promise<void> {
         image_tag: core.getInput("image-tag", { required: true }),
       }),
     })
-    octokit.log.info(`preapred deployment for ref ${ref} in ${owner}/${repo}`)
+    octokit.log.info(`created deployment at ${resp.data.url}`)
   } catch (error) {
     core.setFailed(error.message)
   }
