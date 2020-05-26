@@ -12,10 +12,16 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - run: |
+    - name: check out code
+      uses: actions/checkout@v1
+    - name: run build and test
+      run: |
         yarn install
         yarn all
+    - name: upload to codecov
+      uses: codecov/codecov-action@v1.0.2
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
   test:
     runs-on: ubuntu-latest
     steps:
@@ -28,6 +34,3 @@ jobs:
         namespace: "dictybase"
         image-repo: "dictybase/testbot"
         image-tag: "test"
-    - uses: codecov/codecov-action@v1.0.2
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
