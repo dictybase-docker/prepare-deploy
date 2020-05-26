@@ -1,5 +1,9 @@
 import nock from "nock"
 
+/**
+ * Based on https://github.com/actions/toolkit/blob/5feb835dff800f53c9f6d8989f0b503262aade87/docs/github-package.md
+ */
+
 describe("action test suite", () => {
   it("creates a deployment", async () => {
     process.env["INPUT_TOKEN"] = "token"
