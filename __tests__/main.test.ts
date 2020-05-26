@@ -5,41 +5,50 @@ import nock from "nock"
  */
 
 describe("action test suite", () => {
+  const owner = "dictybase-docker"
+  const repo = "prepare-deploy"
+  const ref = "ref/head/test-ref"
+  const cluster = "testkube"
+  const zone = "us-central1-a"
+  const chart = "prepare-deploy"
+  const chartPath = "deployments/prepare-deploy"
+  const namespace = "dictybase"
+  const imageTag = "abcd"
+  const payload = JSON.stringify({
+    cluster: cluster,
+    zone: zone,
+    chart: chart,
+    path: chartPath,
+    namespace: namespace,
+    image_tag: imageTag,
+  })
+
   it("creates a deployment", async () => {
     process.env["INPUT_TOKEN"] = "token"
-    process.env["GITHUB_REPOSITORY"] = "dictybase-docker/prepare-deploy"
-    process.env["INPUT_REF"] = "ref/head/test-ref"
-    process.env["INPUT_CLUSTER-NAME"] = "dictybase-docker"
-    process.env["INPUT_CLUSTER-ZONE"] = "us-central1-a"
-    process.env["INPUT_CHART-NAME"] = "prepare-deploy"
-    process.env["INPUT_CHART-PATH"] = "deployments/prepare-deploy"
-    process.env["INPUT_NAMESPACE"] = "dictyBase"
-    process.env["INPUT_IMAGE-TAG"] = "abcd"
+    process.env["GITHUB_REPOSITORY"] = `${owner}/${repo}`
+    process.env["INPUT_REF"] = ref
+    process.env["INPUT_CLUSTER-NAME"] = cluster
+    process.env["INPUT_CLUSTER-ZONE"] = zone
+    process.env["INPUT_CHART-NAME"] = chart
+    process.env["INPUT_CHART-PATH"] = chartPath
+    process.env["INPUT_NAMESPACE"] = namespace
+    process.env["INPUT_IMAGE-TAG"] = imageTag
 
     nock("https://api.github.com")
       .persist()
       .post(
-        "/repos/dictybase-docker/prepare-deployment/deployments",
+        "/repos/dictybase-docker/prepare-deploy/deployments",
         JSON.stringify({
-          owner: "dictybase-docker",
-          repo: "prepare-deploy",
-          ref: "ref",
+          ref: ref,
           auto_merge: false,
           required_contexts: [],
-          description: "deploy created by dictybot",
-          payload: {
-            cluster: "seinfeld",
-            zone: "us-central1-a",
-            chart: "prepare-deploy",
-            path: "deployments/prepare-deploy",
-            namespace: "dictybase",
-            image_tag: "abcd",
-          },
+          description: "deploy request from dictybasebot",
+          payload,
         }),
       )
       .reply(200)
-    const main = require("../src/main")
 
+    const main = require("../src/main")
     await main.run()
   })
 })
