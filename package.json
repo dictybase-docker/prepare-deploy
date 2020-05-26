@@ -11,7 +11,7 @@
     "lint": "eslint src/**/*.ts",
     "pack": "ncc build",
     "test": "jest",
-    "all": "yarn build && yarn format && yarn lint && yarn pack && npm test --coverage"
+    "all": "yarn build && yarn format && yarn lint && yarn pack && yarn test --coverage"
   },
   "repository": {
     "type": "git",
