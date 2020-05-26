@@ -1,39 +1,14 @@
 import * as core from "@actions/core"
 import * as github from "@actions/github"
 
-interface deploymentParams {
-  client: github.GitHub
-  owner: string
-  repo: string
-  ref: string
-  auto_merge: boolean
-  required_contexts: Array<string>
-  description: string
-  payload: string
-}
-
-async function runGithubDeployment(params: deploymentParams): Promise<string> {
-  const resp = await params.client.repos.createDeployment({
-    owner: params.owner,
-    repo: params.repo,
-    ref: params.ref,
-    auto_merge: params.auto_merge,
-    required_contexts: params.required_contexts,
-    description: params.description,
-    payload: params.payload,
-  })
-  return resp.data.url
-}
-
-async function run(): Promise<void> {
+export const run = async (): Promise<void> => {
   try {
     const octokit = new github.GitHub(core.getInput("token"), {
       required: true,
     })
     const { repo, owner } = github.context.repo
     const ref = core.getInput("ref", { required: true })
-    const url = await runGithubDeployment({
-      client: octokit,
+    const { data } = await octokit.repos.createDeployment({
       owner: owner,
       repo: repo,
       ref: ref,
@@ -49,7 +24,7 @@ async function run(): Promise<void> {
         image_tag: core.getInput("image-tag", { required: true }),
       }),
     })
-    console.log("created deployment %s", url)
+    console.log("created deployment %s", data.url)
   } catch (error) {
     core.setFailed(error.message)
   }
