@@ -39,6 +39,10 @@ describe('core action module', () => {
     core.setOutput("jerry", "seinfeld")
     expect(core.setOutput).toReturnWith({ key: "jerry", value: "seinfeld" })
   })
+  test('mocking of setFailed', () => {
+    core.setFailed("failed")
+    expect(core.setFailed).toBeCalledWith("failed")
+  })
 })
 
 describe('core github module', () => {
@@ -63,6 +67,7 @@ test('test action runner', async () => {
   const value = await run()
   expect(value).toBeUndefined()
   expect(core.setOutput).toReturnWith({ key: "create-deploy", value: deployUrl })
+  expect(core.setFailed).not.toHaveBeenCalled()
 })
 
 
