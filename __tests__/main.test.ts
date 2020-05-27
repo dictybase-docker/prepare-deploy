@@ -24,7 +24,8 @@ jest.mock("@actions/github", () => {
 
 jest.mock("@actions/core", () => ({
   getInput: jest.fn(input => input),
-  setOutput: jest.fn((key, value) => { return { key: key, value: value } })
+  setOutput: jest.fn((key, value) => { return { key: key, value: value } }),
+  setFailed: jest.fn(msg => msg)
 }))
 
 describe('core action module', () => {
@@ -59,6 +60,9 @@ describe('core github module', () => {
 })
 
 test('test action runner', async () => {
+  const value = await run()
+  expect(value).toBeUndefined()
+  expect(core.setOutput).toReturnWith({ key: "create-deploy", value: deployUrl })
 })
 
 
