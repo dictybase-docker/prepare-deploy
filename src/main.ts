@@ -3,7 +3,7 @@ import * as github from "@actions/github"
 
 export const run = async (): Promise<void> => {
   try {
-    const octokit = new github.GitHub(core.getInput("token"), {
+    const octokit: github.GitHub = new github.GitHub(core.getInput("token"), {
       required: true,
     })
     const { repo, owner } = github.context.repo

@@ -1,13 +1,42 @@
-import * as process from "process"
-import * as cp from "child_process"
-import * as path from "path"
+import * as core from "@actions/core"
+import * as githubMock from "@actions/github"
 
-// shows how the runner will run a javascript action with env / stdout protocol
-test("test runs", () => {
-  process.env["INPUT_MILLISECONDS"] = "500"
-  const ip = path.join(__dirname, "..", "lib", "main.js")
-  const options: cp.ExecSyncOptions = {
-    env: process.env,
+jest.mock("@actions/github", () => {
+  return {
+    Github: jest.fn(() => {
+      return {
+        repos: {
+          createDeployment: jest.fn().mockResolvedValue({
+            data: {
+              url: "https://api.github.com/repos/octocat/example/deployments/1"
+            }
+          })
+        }
+      }
+    }),
+    context: {
+      repo: { owner: "kramerica", repo: "nyc" }
+    }
   }
-  console.log(cp.execSync(`node ${ip}`, options).toString())
 })
+
+jest.mock("@actions/core", () => ({
+  getInput: jest.fn(input => input)
+}))
+
+test('mocking of getInput from core action', () => {
+  core.getInput("hello")
+  expect(core.getInput).toBeCalledWith("hello")
+  core.getInput("token")
+  expect(core.getInput).toBeCalledWith("token")
+})
+
+describe('core github module', () => {
+  test('mocking of context module', () => {
+    const { owner, repo } = githubMock.context.repo
+    expect(owner).toEqual("kramerica")
+    expect(repo).toEqual("nyc")
+  })
+})
+
+
