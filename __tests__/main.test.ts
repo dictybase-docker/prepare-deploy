@@ -1,14 +1,15 @@
 import * as core from "@actions/core"
 import * as githubMock from "@actions/github"
 
+const deployUrl = "https://api.github.com/repos/octocat/example/deployments/1"
 jest.mock("@actions/github", () => {
   return {
-    Github: jest.fn(() => {
+    GitHub: jest.fn().mockImplementation(() => {
       return {
         repos: {
           createDeployment: jest.fn().mockResolvedValue({
             data: {
-              url: "https://api.github.com/repos/octocat/example/deployments/1"
+              url: deployUrl
             }
           })
         }
@@ -32,10 +33,20 @@ test('mocking of getInput from core action', () => {
 })
 
 describe('core github module', () => {
-  test('mocking of context module', () => {
+  test('mocking of context', () => {
     const { owner, repo } = githubMock.context.repo
     expect(owner).toEqual("kramerica")
     expect(repo).toEqual("nyc")
+  })
+  test('mocking of octokit instance', async () => {
+    const { owner, repo } = githubMock.context.repo
+    const octokit = new githubMock.GitHub('token')
+    const { data } = await octokit.repos.createDeployment({
+      owner: owner,
+      repo: repo,
+      ref: "ref"
+    })
+    expect(data.url).toEqual(deployUrl)
   })
 })
 
