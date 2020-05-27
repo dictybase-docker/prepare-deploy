@@ -1,5 +1,6 @@
 import * as core from "@actions/core"
 import * as githubMock from "@actions/github"
+import { run } from "../src/main"
 
 const deployUrl = "https://api.github.com/repos/octocat/example/deployments/1"
 jest.mock("@actions/github", () => {
@@ -22,14 +23,21 @@ jest.mock("@actions/github", () => {
 })
 
 jest.mock("@actions/core", () => ({
-  getInput: jest.fn(input => input)
+  getInput: jest.fn(input => input),
+  setOutput: jest.fn((key, value) => { return { key: key, value: value } })
 }))
 
-test('mocking of getInput from core action', () => {
-  core.getInput("hello")
-  expect(core.getInput).toBeCalledWith("hello")
-  core.getInput("token")
-  expect(core.getInput).toBeCalledWith("token")
+describe('core action module', () => {
+  test('mocking of getInput', () => {
+    core.getInput("hello")
+    expect(core.getInput).toBeCalledWith("hello")
+    core.getInput("token")
+    expect(core.getInput).toBeCalledWith("token")
+  })
+  test('mocking of setOuput', () => {
+    core.setOutput("jerry", "seinfeld")
+    expect(core.setOutput).toReturnWith({ key: "jerry", value: "seinfeld" })
+  })
 })
 
 describe('core github module', () => {
@@ -48,6 +56,9 @@ describe('core github module', () => {
     })
     expect(data.url).toEqual(deployUrl)
   })
+})
+
+test('test action runner', async () => {
 })
 
 
