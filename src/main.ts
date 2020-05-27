@@ -27,7 +27,7 @@ export const run = async (): Promise<void> => {
     core.setOutput("create-deploy", data.url)
     console.log("created deployment %s", data.url)
   } catch (error) {
-    core.setFailed(error.message)
+    core.setFailed(`action failed with error ${error.message}`)
   }
 }
 
