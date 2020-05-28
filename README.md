@@ -1,6 +1,24 @@
 # prepare deploy
-
+[![License](https://img.shields.io/badge/License-BSD%202--Clause-blue.svg)](LICENSE)   
 ![GitHub action](https://github.com/dictybase-docker/prepare-deploy/workflows/build-test/badge.svg)
+[![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=dictybase-docker/prepare-deploy)](https://dependabot.com)   
+![Issues](https://badgen.net/github/issues/dictybase-docker/prepare-deploy)
+![Open Issues](https://badgen.net/github/open-issues/dictybase-docker/prepare-deploy)
+![Closed Issues](https://badgen.net/github/closed-issues/dictybase-docker/prepare-deploy)   
+![Total PRS](https://badgen.net/github/prs/dictybase-docker/prepare-deploy)
+![Open PRS](https://badgen.net/github/open-prs/dictybase-docker/prepare-deploy)
+![Closed PRS](https://badgen.net/github/closed-prs/dictybase-docker/prepare-deploy)
+![Merged PRS](https://badgen.net/github/merged-prs/dictybase-docker/prepare-deploy)   
+![Commits](https://badgen.net/github/commits/dictybase-docker/prepare-deploy/develop)
+![Last commit](https://badgen.net/github/last-commit/dictybase-docker/prepare-deploy/develop)
+![Branches](https://badgen.net/github/branches/dictybase-docker/prepare-deploy)
+![Tags](https://badgen.net/github/tags/dictybase-docker/prepare-deploy/?color=cyan)   
+![GitHub repo size](https://img.shields.io/github/repo-size/dictybase-docker/prepare-deploy?style=plastic)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/dictybase-docker/prepare-deploy?style=plastic)
+[![Lines of Code](https://badgen.net/codeclimate/loc/dictyBase/prepare-deploy)](https://codeclimate.com/github/dictyBase/prepare-deploy/code)   
+[![Funding](https://badgen.net/badge/NIGMS/Rex%20L%20Chisholm,dictyBase/yellow?list=|)](https://projectreporter.nih.gov/project_info_description.cfm?aid=9476993)
+[![Funding](https://badgen.net/badge/NIGMS/Rex%20L%20Chisholm,DSC/yellow?list=|)](https://projectreporter.nih.gov/project_info_description.cfm?aid=9438930)
+
 
 The `dictybase-docker/prepare-deploy` is a javascript action that triggers a [github deployment](https://developer.github.com/v3/repos/deployments/#create-a-deployment)
 for the same repository. The action is mainly designed to work with the following assumption..
