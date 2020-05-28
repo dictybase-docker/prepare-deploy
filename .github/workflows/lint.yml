@@ -1,0 +1,16 @@
+name: Lint
+on: pull_request
+jobs:
+  eslint:
+    runs-on: ubuntu-18.04
+    steps:
+      - name: set up node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - name: check out code
+        uses: actions/checkout@v2
+      - name: run eslint 
+        run: |
+          yarn install
+          yarn lint
