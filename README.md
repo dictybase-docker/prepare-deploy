@@ -71,7 +71,11 @@ jobs:
           repository: dictybase/auto-deploy
           add_git_labels: true
           tag_with_sha: true
-      - name: prepare for deploy
+  prepare-deploy:
+    needs: build
+    runs-on: ubuntu-18.04
+    steps:
+      - name: create deploy event
         uses: dictybase-docker/prepare-deploy@v1
         with:
           cluster-name: staging
