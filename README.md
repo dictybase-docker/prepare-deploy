@@ -85,3 +85,8 @@ The following inputs are supported.
 The following outputs are supported.
 
 - `create-deploy` - The url for newly created deployment.
+
+ Active Developers
+
+<a href="https://sourcerer.io/cybersiddhu"><img src="https://sourcerer.io/assets/avatar/cybersiddhu" height="80px" alt="Sourcerer"></a>
+<a href="https://sourcerer.io/wildlifehexagon"><img src="https://sourcerer.io/assets/avatar/wildlifehexagon" height="80px" alt="Sourcerer"></a>
