@@ -14,8 +14,7 @@
 ![Branches](https://badgen.net/github/branches/dictybase-docker/prepare-deploy)
 ![Tags](https://badgen.net/github/tags/dictybase-docker/prepare-deploy/?color=cyan)   
 ![GitHub repo size](https://img.shields.io/github/repo-size/dictybase-docker/prepare-deploy?style=plastic)
-![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/dictybase-docker/prepare-deploy?style=plastic)
-[![Lines of Code](https://badgen.net/codeclimate/loc/dictyBase/prepare-deploy)](https://codeclimate.com/github/dictyBase/prepare-deploy/code)   
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/dictybase-docker/prepare-deploy?style=plastic)   
 [![Funding](https://badgen.net/badge/NIGMS/Rex%20L%20Chisholm,dictyBase/yellow?list=|)](https://projectreporter.nih.gov/project_info_description.cfm?aid=9476993)
 [![Funding](https://badgen.net/badge/NIGMS/Rex%20L%20Chisholm,DSC/yellow?list=|)](https://projectreporter.nih.gov/project_info_description.cfm?aid=9438930)
 
