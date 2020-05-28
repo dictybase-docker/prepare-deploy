@@ -1,0 +1,28 @@
+name: Continuous integration
+on: 
+ push:
+   branches:
+     - develop
+jobs:
+  testpack:
+    runs-on: ubuntu-18.04
+    steps:
+      - name: set up node.js
+        uses: actions/setup-node@v1
+        with:
+            go-version: 12.x
+      - name: check out code
+        uses: actions/checkout@v2
+      - name: unit test 
+        run: |
+            yarn
+            yarn test
+      - name: create distribution 
+        run: |
+            yarn build
+            yarn pack
+      - name: push the new distribution
+        run: |
+            git add dist
+            git commit -a -m 'update dist on '$(date +"%m-%d-%Y:%H:%m:%S")
+            git push origin $(git rev-parse --abbrev-ref HEAD)
