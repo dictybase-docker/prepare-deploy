@@ -28,7 +28,7 @@ jobs:
             if git diff-index --quiet HEAD; then value=yes; fi
             echo "::set-output name=git_changes::${value}"
       - name: extract user information 
-        if: steps.git_diff.outputs.git_changes == "no" 
+        if: contains(steps.git_diff.outputs.git_changes, 'no') 
         id: user_info
         uses: actions/github-script@v1
         with:
@@ -40,12 +40,12 @@ jobs:
               core.setOutput("name", data.name)
               core.setOutput("email", data.email)
       - name: setup git identity
-        if: steps.git_diff.outputs.git_changes == "no" 
+        if: contains(steps.git_diff.outputs.git_changes, 'no') 
         run: |
             git config --global user.email ${{ steps.user_info.outputs.email }}
             git config --global user.name ${{ steps.user_info.outputs.name }}
       - name: push the new distribution
-        if: steps.git_diff.outputs.git_changes == "no" 
+        if: contains(steps.git_diff.outputs.git_changes, 'no') 
         run: |
             git add dist
             git commit -a -m 'update dist on '$(date +"%m-%d-%Y:%H:%m:%S")
