@@ -2170,6 +2170,25 @@ function checkMode (stat, options) {
 
 "use strict";
 
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -2179,39 +2198,41 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-    result["default"] = mod;
-    return result;
-};
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.run = void 0;
 const core = __importStar(__webpack_require__(470));
 const github = __importStar(__webpack_require__(469));
-function run() {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            const inputs = [
-                "cluster-name",
-                "cluster-zone",
-                "chart-name",
-                "chart-path",
-                "namespace",
-                "image-repo",
-                "image-tag",
-            ];
-            inputs.forEach(input => console.log(`${input} == ${core.getInput(input)}`));
-            // Get the JSON webhook payload for the event that triggered the workflow
-            const payload = JSON.stringify(github.context.payload, undefined, 2);
-            console.log(`The event payload: ${payload}`);
-        }
-        catch (error) {
-            core.setFailed(error.message);
-        }
-    });
-}
-run();
+exports.run = () => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const octokit = new github.GitHub(core.getInput("token"), {
+            required: true,
+        });
+        const { repo, owner } = github.context.repo;
+        const ref = core.getInput("ref", { required: true });
+        const { data } = yield octokit.repos.createDeployment({
+            owner: owner,
+            repo: repo,
+            ref: ref,
+            auto_merge: false,
+            required_contexts: [],
+            description: "deploy created by dictybot",
+            payload: JSON.stringify({
+                cluster: core.getInput("cluster-name", { required: true }),
+                zone: core.getInput("cluster-zone", { required: true }),
+                chart: core.getInput("chart-name", { required: true }),
+                path: core.getInput("chart-path", { required: true }),
+                namespace: core.getInput("namespace", { required: true }),
+                image_tag: core.getInput("image-tag", { required: true }),
+            }),
+        });
+        core.setOutput("create-deploy", data.url);
+        console.log("created deployment %s", data.url);
+    }
+    catch (error) {
+        core.setFailed(`action failed with error ${error.message}`);
+    }
+});
+exports.run();
 
 
 /***/ }),
