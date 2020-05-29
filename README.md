@@ -1,6 +1,6 @@
 # prepare deploy
 [![License](https://img.shields.io/badge/License-BSD%202--Clause-blue.svg)](LICENSE)   
-![GitHub action](https://github.com/dictybase-docker/prepare-deploy/workflows/build-test/badge.svg)
+![Continuous integration](https://github.com/dictybase-docker/prepare-deploy/workflows/Continuous%20integration/badge.svg)
 [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=dictybase-docker/prepare-deploy)](https://dependabot.com)   
 ![Issues](https://badgen.net/github/issues/dictybase-docker/prepare-deploy)
 ![Open Issues](https://badgen.net/github/open-issues/dictybase-docker/prepare-deploy)
