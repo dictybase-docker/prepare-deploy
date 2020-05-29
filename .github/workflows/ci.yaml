@@ -24,9 +24,9 @@ jobs:
       - name: check for any changes through git
         id: git_diff
         run: |
-            value="no"
-            if git diff-index --quiet HEAD; then value=yes; fi
-            echo "::set-output name=git_changes::${value}"
+            echo "::set-output name=git_changes::yes"
+            if git diff-index --quiet HEAD; then echo "::set-output name=git_changes::no"; fi
+            echo ${{steps.git_diff.outputs.git_changes}}
       - name: extract user information 
         if: contains(steps.git_diff.outputs.git_changes, 'no') 
         id: user_info
@@ -42,6 +42,7 @@ jobs:
       - name: setup git identity
         if: contains(steps.git_diff.outputs.git_changes, 'no') 
         run: |
+            echo ${{steps.git_diff.outputs.git_changes}}
             git config --global user.email ${{ steps.user_info.outputs.email }}
             git config --global user.name ${{ steps.user_info.outputs.name }}
       - name: push the new distribution
