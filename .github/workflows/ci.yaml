@@ -25,7 +25,7 @@ jobs:
         id: git_diff
         run: |
             value=1
-            if git diff-index --quiet HEAD; then value=0"; fi
+            if git diff-index --quiet HEAD; then value=0; fi
             echo "::set-output name=changes::${value}"
       - name: extract user information 
         if: steps.git_diff.outputs.changes
