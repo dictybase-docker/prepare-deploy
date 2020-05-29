@@ -19,8 +19,8 @@ jobs:
             yarn test
       - name: create distribution 
         run: |
-            yarn build
-            yarn pack
+            yarn run build
+            yarn run pack
       - name: extract user information 
         id: user_info
         uses: actions/github-script@v1
