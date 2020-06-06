@@ -24,7 +24,7 @@ export const run = async (): Promise<void> => {
         image_tag: core.getInput("image-tag", { required: true }),
       }),
     })
-    core.setOutput("create-deploy", data.url)
+    core.setOutput("deployment", JSON.stringify(data))
     console.log("created deployment %s", data.url)
   } catch (error) {
     core.setFailed(`action failed with error ${error.message}`)
