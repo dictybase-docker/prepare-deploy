@@ -1,5 +1,8 @@
 import * as core from "@actions/core"
 import * as github from "@actions/github"
+import * as artifact from "@actions/artifact"
+import { promises as fsPromises } from "fs"
+import { join, dirname } from "path"
 
 export const run = async (): Promise<void> => {
   try {
@@ -24,7 +27,15 @@ export const run = async (): Promise<void> => {
         image_tag: core.getInput("image-tag", { required: true }),
       }),
     })
+    const workspace = process.env.GITHUB_WORKSPACE || "./"
+    const outFile = join(workspace, core.getInput("output"))
+    const outDir = dirname(outFile)
+    await fsPromises.writeFile(outFile, JSON.stringify(data))
+    const uploadResponse = await artifact
+      .create()
+      .uploadArtifact("deploy-payload", [outFile], outDir)
     core.setOutput("deployment", JSON.stringify(data))
+    core.setOutput("upload-response", JSON.stringify(uploadResponse))
     console.log("created deployment %s", data.url)
   } catch (error) {
     core.setFailed(`action failed with error ${error.message}`)
