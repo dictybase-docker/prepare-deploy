@@ -34,8 +34,8 @@ export const run = async (): Promise<void> => {
     const uploadResponse = await artifact
       .create()
       .uploadArtifact("deploy-payload", [outFile], outDir)
-    core.setOutput("deployment", JSON.stringify(data))
-    core.setOutput("upload-response", JSON.stringify(uploadResponse))
+    core.setOutput("deployment-response", data)
+    core.setOutput("upload-response", uploadResponse)
     console.log("created deployment %s", data.url)
   } catch (error) {
     core.setFailed(`action failed with error ${error.message}`)
