@@ -1,5 +1,7 @@
+import * as tmp from "tmp-promise"
 import * as core from "@actions/core"
 import * as githubMock from "@actions/github"
+import * as artifact from "@actions/artifact"
 import { run } from "../src/main"
 
 const deployUrl = "https://api.github.com/repos/octocat/example/deployments/1"
@@ -19,6 +21,19 @@ jest.mock("@actions/github", () => {
     context: {
       repo: { owner: "kramerica", repo: "nyc" }
     }
+  }
+})
+jest.mock("@actions/artifact", () => {
+  return {
+    create: jest.fn().mockImplementation(() => {
+      return {
+        uploadArtifact: jest.fn().mockResolvedValue({
+          artifactName: "artifact",
+          artifactItems: ["one", "two"],
+          size: 20,
+        })
+      }
+    }),
   }
 })
 
