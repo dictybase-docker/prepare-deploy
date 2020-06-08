@@ -52,7 +52,9 @@ describe('core action module', () => {
   })
   test('mocking of setOuput', () => {
     core.setOutput("jerry", "seinfeld")
-    expect(core.setOutput).toReturnWith({ key: "jerry", value: "seinfeld" })
+    core.setOutput("george", { data: "costanza" })
+    expect(core.setOutput).nthReturnedWith(1, { key: "jerry", value: "seinfeld" })
+    expect(core.setOutput).nthReturnedWith(2, { key: "george", value: { data: "costanza" } })
   })
   test('mocking of setFailed', () => {
     core.setFailed("failed")
@@ -78,11 +80,36 @@ describe('core github module', () => {
   })
 })
 
-test('test action runner', async () => {
-  const value = await run()
-  expect(value).toBeUndefined()
-  expect(core.setOutput).toReturnWith({ key: "create-deploy", value: deployUrl })
-  expect(core.setFailed).not.toHaveBeenCalled()
+describe('action runner', () => {
+  beforeEach(async () => {
+    const fs = await tmp.dir()
+    process.env.GITHUB_WORKSPACE = fs.path
+  })
+  test('mocking output', async () => {
+    const value = await run()
+    expect(value).toBeUndefined()
+    // expect(core.setOutput).nthCalledWith(1, "deployment-response",
+    //  {
+    //   data: { url: deployUrl }
+    // })
+    expect(core.setOutput).nthCalledWith(2, "upload-response",
+      {
+        artifactName: "artifact",
+        artifactItems: ["one", "two"],
+        size: 20,
+      })
+    expect(core.setOutput).toHaveReturnedTimes(2)
+    //expect(core.setOutput).nthReturnedWith(1, { key: "deployment-response", value: { data: { url: deployUrl } } })
+    expect(core.setOutput).nthReturnedWith(2, {
+      key: "upload-response",
+      value: {
+        artifactName: "artifact",
+        artifactItems: ["one", "two"],
+        size: 20,
+      }
+    })
+    expect(core.setFailed).not.toHaveBeenCalled()
+  })
 })
 
 
