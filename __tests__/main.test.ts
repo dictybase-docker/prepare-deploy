@@ -1,4 +1,6 @@
 import * as tmp from "tmp-promise"
+import { promises as fsPromises } from "fs"
+import { join } from "path"
 import * as core from "@actions/core"
 import * as githubMock from "@actions/github"
 import * as artifact from "@actions/artifact"
@@ -81,25 +83,27 @@ describe('core github module', () => {
 })
 
 describe('action runner', () => {
+  let fs: tmp.DirectoryResult
   beforeEach(async () => {
-    const fs = await tmp.dir()
+    fs = await tmp.dir()
     process.env.GITHUB_WORKSPACE = fs.path
   })
-  test('mocking output', async () => {
+  test('content of output artifact', async () => {
     const value = await run()
     expect(value).toBeUndefined()
-    // expect(core.setOutput).nthCalledWith(1, "deployment-response",
-    //  {
-    //   data: { url: deployUrl }
-    // })
-    expect(core.setOutput).nthCalledWith(2, "upload-response",
-      {
+    const content = await fsPromises.readFile(join(fs.path, "output"), 'utf-8')
+    expect(JSON.parse(content)).toMatchObject({ url: deployUrl })
+  })
+  test('mocking of action output', async () => {
+    const value = await run()
+    expect(core.setOutput).nthCalledWith(1, "deployment-response", { url: deployUrl })
+    expect(core.setOutput).nthCalledWith(2, "upload-response",{
         artifactName: "artifact",
         artifactItems: ["one", "two"],
         size: 20,
       })
     expect(core.setOutput).toHaveReturnedTimes(2)
-    //expect(core.setOutput).nthReturnedWith(1, { key: "deployment-response", value: { data: { url: deployUrl } } })
+    expect(core.setOutput).nthReturnedWith(1, { key: "deployment-response", value: { url: deployUrl } })
     expect(core.setOutput).nthReturnedWith(2, {
       key: "upload-response",
       value: {
