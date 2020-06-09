@@ -7,9 +7,38 @@ import * as githubMock from "@actions/github"
 import * as artifact from "@actions/artifact"
 
 const deployUrl = "https://api.github.com/repos/octocat/example/deployments/1"
-jest.mock("@actions/github", () => {
+jest.mock("@actions/artifact", () => {
   return {
-    GitHub: jest.fn().mockImplementation(() => {
+    create: jest.fn().mockImplementation(() => {
+      return {
+        uploadArtifact: jest.fn().mockResolvedValue({
+          artifactName: "artifact",
+          artifactItems: ["one", "two"],
+          size: 20,
+        })
+      }
+    }),
+  }
+})
+jest.mock("@actions/core", () => ({
+  getInput: jest.fn(input => input),
+  setOutput: jest.fn((key, value) => { return { key: key, value: value } }),
+  setFailed: jest.fn(msg => msg)
+}))
+jest.mock("@actions/github", () => ({
+  getOctokit: jest.fn().mockImplementation(() => {
+    return {
+      repos: {
+        createDeployment: jest.fn().mockResolvedValue({ url: deployUrl })
+      }
+    }
+  }),
+  context: { repo: { owner: "kramerica", repo: "nyc" } }
+}))
+
+/* jest.mock("@actions/github", () => {
+  return {
+    getOctokit: jest.fn().mockImplementation(() => {
       return {
         repos: {
           createDeployment: jest.fn().mockResolvedValue({
@@ -24,26 +53,7 @@ jest.mock("@actions/github", () => {
       repo: { owner: "kramerica", repo: "nyc" }
     }
   }
-})
-jest.mock("@actions/artifact", () => {
-  return {
-    create: jest.fn().mockImplementation(() => {
-      return {
-        uploadArtifact: jest.fn().mockResolvedValue({
-          artifactName: "artifact",
-          artifactItems: ["one", "two"],
-          size: 20,
-        })
-      }
-    }),
-  }
-})
-
-jest.mock("@actions/core", () => ({
-  getInput: jest.fn(input => input),
-  setOutput: jest.fn((key, value) => { return { key: key, value: value } }),
-  setFailed: jest.fn(msg => msg)
-}))
+}) */
 
 describe('core action module', () => {
   test('mocking of getInput', () => {
@@ -72,13 +82,13 @@ describe('core github module', () => {
   })
   test('mocking of octokit instance', async () => {
     const { owner, repo } = githubMock.context.repo
-    const octokit = new githubMock.GitHub('token')
-    const { data } = await octokit.repos.createDeployment({
+    const octokit = githubMock.getOctokit('token')
+    const { url } = await octokit.repos.createDeployment({
       owner: owner,
       repo: repo,
       ref: "ref"
     })
-    expect(data.url).toEqual(deployUrl)
+    expect(url).toEqual(deployUrl)
   })
 })
 
