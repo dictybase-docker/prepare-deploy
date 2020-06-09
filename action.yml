@@ -27,7 +27,7 @@ inputs:
     description: 'github token for interacting with github api'
     required: true
   output:
-    description: 'output file containing json formatted deployment payload'
+    description: 'output artifact containing json formatted deployment payload'
     default: 'exchange/deployment.json'
 runs:
   using: 'node12'

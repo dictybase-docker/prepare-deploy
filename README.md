@@ -41,6 +41,7 @@ steps:
       image-tag: sha-4839d84a
       ref: 483fjke81 #(or v1.2.3 or feat/hot-fuzz etc.)
       token: ${{ github.token }}
+      output: 'output/deployment.json'
 ```
 It is recommended to run it after a test and build jobs(CI), for example...
 ```yaml
@@ -102,10 +103,21 @@ The following inputs are supported.
 
 - `token` - (required) Github token for authentication.
 
+- `output` - Upload artifact containing a file with the deployment payload. It defaults to
+             the path `${GITHUB_WORKSPACE}/exchange/deployment.json` and can be accessed
+             with [download artifact action](https://github.com/actions/download-artifact). 
+             Both relative and absolute file path can be given. For relative path it will be
+             placed under [github workspace](https://help.github.com/en/actions/reference/virtual-environments-for-github-hosted-runners#filesystems-on-github-hosted-runners).  
+
+
+
 ## Outputs
 The following outputs are supported.
 
-- `create-deploy` - The url for newly created deployment.
+- `output` - An upload artifact for sharing deployment payload among jobs in the same workflow.
+- `deployment-response` - Contain deployment payload in the output which can be accessed in any 
+                          successive step in the same job. 
+- `upload-response` - Contain [upload artifact payload](https://github.com/actions/toolkit/tree/master/packages/artifact#upload-result) to be accessed in any successive step in the same job.
 
 ## Active Developers
 

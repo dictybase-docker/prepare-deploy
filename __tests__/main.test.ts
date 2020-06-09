@@ -1,10 +1,10 @@
-import * as tmp from "tmp-promise"
 import { promises as fsPromises } from "fs"
 import { join } from "path"
+import { run } from "../src/main"
+import * as tmp from "tmp-promise"
 import * as core from "@actions/core"
 import * as githubMock from "@actions/github"
 import * as artifact from "@actions/artifact"
-import { run } from "../src/main"
 
 const deployUrl = "https://api.github.com/repos/octocat/example/deployments/1"
 jest.mock("@actions/github", () => {
@@ -97,11 +97,11 @@ describe('action runner', () => {
   test('mocking of action output', async () => {
     const value = await run()
     expect(core.setOutput).nthCalledWith(1, "deployment-response", { url: deployUrl })
-    expect(core.setOutput).nthCalledWith(2, "upload-response",{
-        artifactName: "artifact",
-        artifactItems: ["one", "two"],
-        size: 20,
-      })
+    expect(core.setOutput).nthCalledWith(2, "upload-response", {
+      artifactName: "artifact",
+      artifactItems: ["one", "two"],
+      size: 20,
+    })
     expect(core.setOutput).toHaveReturnedTimes(2)
     expect(core.setOutput).nthReturnedWith(1, { key: "deployment-response", value: { url: deployUrl } })
     expect(core.setOutput).nthReturnedWith(2, {
