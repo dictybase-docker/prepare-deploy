@@ -23,11 +23,9 @@ jobs:
             yarn run pack
       - name: check for any changes through git
         id: git_diff
-        run: |
-            echo "::set-output name=git_changes::yes"
-            if git diff-index --quiet HEAD; then echo "::set-output name=git_changes::no"; fi
+        run: git diff-index --quiet HEAD
       - name: extract user information 
-        if: contains(steps.git_diff.outputs.git_changes, 'yes') 
+        if: ${{ failure() }} 
         id: user_info
         uses: actions/github-script@v1
         with:
@@ -39,12 +37,12 @@ jobs:
               core.setOutput("name", data.name)
               core.setOutput("email", data.email)
       - name: setup git identity
-        if: contains(steps.git_diff.outputs.git_changes, 'yes') 
+        if: ${{ failure() }} 
         run: |
             git config --global user.email ${{ steps.user_info.outputs.email }}
             git config --global user.name ${{ steps.user_info.outputs.name }}
       - name: push the new distribution
-        if: contains(steps.git_diff.outputs.git_changes, 'yes') 
+        if: ${{ failure() }} 
         run: |
             git add dist
             git commit -a -m 'update dist on '$(date +"%m-%d-%Y:%H:%m:%S")
