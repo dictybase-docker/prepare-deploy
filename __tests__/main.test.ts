@@ -36,25 +36,6 @@ jest.mock("@actions/github", () => ({
   context: { repo: { owner: "kramerica", repo: "nyc" } }
 }))
 
-/* jest.mock("@actions/github", () => {
-  return {
-    getOctokit: jest.fn().mockImplementation(() => {
-      return {
-        repos: {
-          createDeployment: jest.fn().mockResolvedValue({
-            data: {
-              url: deployUrl
-            }
-          })
-        }
-      }
-    }),
-    context: {
-      repo: { owner: "kramerica", repo: "nyc" }
-    }
-  }
-}) */
-
 describe('core action module', () => {
   test('mocking of getInput', () => {
     core.getInput("hello")
@@ -101,7 +82,7 @@ describe('action runner', () => {
   test('content of output artifact', async () => {
     const value = await run()
     expect(value).toBeUndefined()
-    const content = await fsPromises.readFile(join(fs.path, "output"), 'utf-8')
+    const content = await fsPromises.readFile(join(fs.path, "deployment.json"), 'utf-8')
     expect(JSON.parse(content)).toMatchObject({ url: deployUrl })
   })
   test('mocking of action output', async () => {

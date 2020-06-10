@@ -28,12 +28,12 @@ export const run = async (): Promise<void> => {
       }),
     })
     const workspace = process.env.GITHUB_WORKSPACE || "./"
-    const outFile = join(workspace, core.getInput("output"))
+    const outFile = join(workspace, "deployment.json")
     const outDir = dirname(outFile)
     await fsPromises.writeFile(outFile, JSON.stringify(data))
     const uploadResponse = await artifact
       .create()
-      .uploadArtifact("deploy-payload", [outFile], outDir)
+      .uploadArtifact(core.getInput("artifact"), [outFile], outDir)
     core.setOutput("deployment-response", data)
     core.setOutput("upload-response", uploadResponse)
     console.log("created deployment %s", data.url)
