@@ -23,7 +23,7 @@ jobs:
             yarn run pack
       - name: check for any changes through git
         id: git_diff
-        run: git diff-index --quiet HEAD
+        run: git diff-index --quiet HEAD -- || exit 1
       - name: extract user information 
         if: ${{ failure() }} 
         id: user_info
