@@ -3432,12 +3432,12 @@ exports.run = () => __awaiter(void 0, void 0, void 0, function* () {
             }),
         });
         const workspace = process.env.GITHUB_WORKSPACE || "./";
-        const outFile = path_1.join(workspace, core.getInput("output"));
+        const outFile = path_1.join(workspace, "deployment.json");
         const outDir = path_1.dirname(outFile);
         yield fs_1.promises.writeFile(outFile, JSON.stringify(data));
         const uploadResponse = yield artifact
             .create()
-            .uploadArtifact("deploy-payload", [outFile], outDir);
+            .uploadArtifact(core.getInput("artifact"), [outFile], outDir);
         core.setOutput("deployment-response", data);
         core.setOutput("upload-response", uploadResponse);
         console.log("created deployment %s", data.url);
