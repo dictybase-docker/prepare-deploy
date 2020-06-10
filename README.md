@@ -41,7 +41,6 @@ steps:
       image-tag: sha-4839d84a
       ref: 483fjke81 #(or v1.2.3 or feat/hot-fuzz etc.)
       token: ${{ github.token }}
-      output: 'output/deployment.json'
 ```
 It is recommended to run it after a test and build jobs(CI), for example...
 ```yaml
@@ -113,7 +112,7 @@ The following outputs are supported.
 
 - `deployment-response` - Contain deployment payload in the output which can be accessed in any 
                           successive step in the same job. 
-- `upload-response` - Contain [upload artifact payload](https://github.com/actions/toolkit/tree/master/packages/artifact#upload-result) to be accessed in any successive step in the same job.
+- `upload-response` - Contain [upload artifact payload](https://github.com/actions/toolkit/tree/master/packages/artifact#upload-result) to be accessed in any successive step within the same job.
 
 ## Active Developers
 
