@@ -10,36 +10,10 @@ jobs:
       - name: set up node.js
         uses: actions/setup-node@v1
         with:
-            go-version: 12.x
+            node-version: '12.x'
       - name: check out code
         uses: actions/checkout@v2
       - name: unit test 
         run: |
             yarn
             yarn test
-      - name: force changes in dist file
-        run: echo 'not elegant' >> dist/index.js
-      - name: create distribution 
-        run: |
-            yarn run build
-            yarn run pack
-      - name: extract user information 
-        id: user_info
-        uses: actions/github-script@v1
-        with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
-          script: |
-              const { data } = await github.users.getByUsername({
-                username: context.payload.sender.login
-              })
-              core.setOutput("name", data.name)
-              core.setOutput("email", data.email)
-      - name: setup git identity
-        run: |
-            git config --global user.email ${{ steps.user_info.outputs.email }}
-            git config --global user.name ${{ steps.user_info.outputs.name }}
-      - name: push the new distribution
-        run: |
-            git add dist
-            git commit -a -m 'update dist on '$(date +"%m-%d-%Y:%H:%m:%S")
-            git push origin $(git rev-parse --abbrev-ref HEAD)
