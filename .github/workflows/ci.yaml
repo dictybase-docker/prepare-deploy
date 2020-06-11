@@ -5,7 +5,7 @@ on:
      - develop
 jobs:
   testpack:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     steps:
       - name: set up node.js
         uses: actions/setup-node@v1
@@ -17,15 +17,13 @@ jobs:
         run: |
             yarn
             yarn test
+      - name: force changes in dist file
+        run: echo 'not elegant' >> dist/index.js
       - name: create distribution 
         run: |
             yarn run build
             yarn run pack
-      - name: check for any changes through git
-        id: git_diff
-        run: git diff-index --exit-code ${{ github.sha }} 
       - name: extract user information 
-        if: ${{ failure() }} 
         id: user_info
         uses: actions/github-script@v1
         with:
@@ -37,12 +35,10 @@ jobs:
               core.setOutput("name", data.name)
               core.setOutput("email", data.email)
       - name: setup git identity
-        if: ${{ failure() }} 
         run: |
             git config --global user.email ${{ steps.user_info.outputs.email }}
             git config --global user.name ${{ steps.user_info.outputs.name }}
       - name: push the new distribution
-        if: ${{ failure() }} 
         run: |
             git add dist
             git commit -a -m 'update dist on '$(date +"%m-%d-%Y:%H:%m:%S")
