@@ -3415,7 +3415,7 @@ exports.run = () => __awaiter(void 0, void 0, void 0, function* () {
         });
         const { repo, owner } = github.context.repo;
         const ref = core.getInput("ref", { required: true });
-        const data = yield octokit.repos.createDeployment({
+        const { data } = yield octokit.repos.createDeployment({
             owner: owner,
             repo: repo,
             ref: ref,
