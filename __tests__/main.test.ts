@@ -82,7 +82,7 @@ describe('action runner', () => {
   test('content of output artifact', async () => {
     const value = await run()
     expect(value).toBeUndefined()
-    const content = await fsPromises.readFile(join(fs.path, "deployment.json"), 'utf-8')
+    const content = await fsPromises.readFile(join(fs.path, "artifact-file"), 'utf-8')
     expect(JSON.parse(content)).toMatchObject({ url: deployUrl })
   })
   test('mocking of action output', async () => {

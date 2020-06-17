@@ -27,8 +27,12 @@ inputs:
     description: 'github token for interacting with github api'
     required: true
   artifact:
-    description: 'name of output artifact that will contain json formatted deployment payload'
+    description: 'name of output artifact that can be used for downloading'
     default: 'deploy-payload'
+  artifact-file:
+    description: 'name of the file that will contain the payload'
+    default: 'deployment.json'
+  
 runs:
   using: 'node12'
   main: 'dist/index.js'

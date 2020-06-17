@@ -28,7 +28,7 @@ export const run = async (): Promise<void> => {
       }),
     })
     const workspace = process.env.GITHUB_WORKSPACE || "./"
-    const outFile = join(workspace, "deployment.json")
+    const outFile = join(workspace, core.getInput("artifact-file"))
     const outDir = dirname(outFile)
     await fsPromises.writeFile(outFile, JSON.stringify(data))
     const uploadResponse = await artifact
