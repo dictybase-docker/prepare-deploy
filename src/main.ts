@@ -11,7 +11,7 @@ export const run = async (): Promise<void> => {
     })
     const { repo, owner } = github.context.repo
     const ref = core.getInput("ref", { required: true })
-    const data = await octokit.repos.createDeployment({
+    const { data } = await octokit.repos.createDeployment({
       owner: owner,
       repo: repo,
       ref: ref,

@@ -29,7 +29,7 @@ jest.mock("@actions/github", () => ({
   getOctokit: jest.fn().mockImplementation(() => {
     return {
       repos: {
-        createDeployment: jest.fn().mockResolvedValue({ url: deployUrl })
+        createDeployment: jest.fn().mockResolvedValue({ data: { url: deployUrl } })
       }
     }
   }),
@@ -64,12 +64,12 @@ describe('core github module', () => {
   test('mocking of octokit instance', async () => {
     const { owner, repo } = githubMock.context.repo
     const octokit = githubMock.getOctokit('token')
-    const { url } = await octokit.repos.createDeployment({
+    const { data } = await octokit.repos.createDeployment({
       owner: owner,
       repo: repo,
       ref: "ref"
     })
-    expect(url).toEqual(deployUrl)
+    expect(data).toEqual({ url: deployUrl })
   })
 })
 
