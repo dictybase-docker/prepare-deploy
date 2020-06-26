@@ -18,6 +18,7 @@ export const run = async (): Promise<void> => {
       auto_merge: false,
       required_contexts: [],
       description: "deploy created by dictybot",
+      environment: core.getInput("environment"),
       payload: JSON.stringify({
         cluster: core.getInput("cluster-name", { required: true }),
         zone: core.getInput("cluster-zone", { required: true }),
