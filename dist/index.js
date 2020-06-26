@@ -3422,6 +3422,7 @@ exports.run = () => __awaiter(void 0, void 0, void 0, function* () {
             auto_merge: false,
             required_contexts: [],
             description: "deploy created by dictybot",
+            environment: core.getInput("environment"),
             payload: JSON.stringify({
                 cluster: core.getInput("cluster-name", { required: true }),
                 zone: core.getInput("cluster-zone", { required: true }),
@@ -3432,7 +3433,7 @@ exports.run = () => __awaiter(void 0, void 0, void 0, function* () {
             }),
         });
         const workspace = process.env.GITHUB_WORKSPACE || "./";
-        const outFile = path_1.join(workspace, "deployment.json");
+        const outFile = path_1.join(workspace, core.getInput("artifact-file"));
         const outDir = path_1.dirname(outFile);
         yield fs_1.promises.writeFile(outFile, JSON.stringify(data));
         const uploadResponse = yield artifact
