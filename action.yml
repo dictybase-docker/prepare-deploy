@@ -32,6 +32,9 @@ inputs:
   artifact-file:
     description: 'name of the file that will contain the payload'
     default: 'deployment.json'
+  environment:
+    description: 'name of target environment'
+    default: 'development'
   
 runs:
   using: 'node12'
