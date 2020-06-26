@@ -102,6 +102,8 @@ The following inputs are supported.
 
 - `token` - (required) Github token for authentication.
 
+- `environment` - (optional) Runtime environment name. Default to development.
+
 - `artifact` - Name of upload artifact containing a file with the deployment payload. 
                It can be accessed with [download artifact action](https://github.com/actions/download-artifact) within the same workflow. The name defaults to `deploy-payload` 
 
