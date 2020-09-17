@@ -9,6 +9,7 @@ export const run = async (): Promise<void> => {
     const octokit = github.getOctokit(core.getInput("token"), {
       required: true,
     })
+    console.log(github.context)
     const { repo, owner } = github.context.repo
     const ref = core.getInput("ref", { required: true })
     const { data } = await octokit.repos.createDeployment({
