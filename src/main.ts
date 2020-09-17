@@ -9,13 +9,10 @@ export const run = async (): Promise<void> => {
     const octokit = github.getOctokit(core.getInput("token"), {
       required: true,
     })
-    console.log(github.context)
-    const { repo, owner } = github.context.repo
-    const ref = core.getInput("ref", { required: true })
     const { data } = await octokit.repos.createDeployment({
-      owner: owner,
-      repo: repo,
-      ref: ref,
+      owner: core.getInput("owner", { required: true }),
+      repo: core.getInput("repo", { required: true }),
+      ref: core.getInput("ref", { required: true }),
       auto_merge: false,
       required_contexts: [],
       description: "deploy created by dictybot",

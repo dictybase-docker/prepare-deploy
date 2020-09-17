@@ -24,18 +24,23 @@ inputs:
     description: 'Name of a specific branch, sha or tag that are requested to be deployed'
     required: true
   token:
-    description: 'github token for interacting with github api'
+    description: 'GitHub token for interacting with GitHub API'
     required: true
+  repo:
+    description: 'Repository the deploy is being requested from'
+    required: true  
+  owner:
+    description: 'Owner of the repository the deploy is being requested from'
+    required: true  
   artifact:
-    description: 'name of output artifact that can be used for downloading'
+    description: 'Name of the output artifact that can be used for downloading'
     default: 'deploy-payload'
   artifact-file:
-    description: 'name of the file that will contain the payload'
+    description: 'Name of the file that will contain the payload'
     default: 'deployment.json'
   environment:
-    description: 'name of target environment'
+    description: 'Name of the target environment'
     default: 'development'
-  
 runs:
   using: 'node12'
   main: 'dist/index.js'

@@ -3413,12 +3413,10 @@ exports.run = () => __awaiter(void 0, void 0, void 0, function* () {
         const octokit = github.getOctokit(core.getInput("token"), {
             required: true,
         });
-        const { repo, owner } = github.context.repo;
-        const ref = core.getInput("ref", { required: true });
         const { data } = yield octokit.repos.createDeployment({
-            owner: owner,
-            repo: repo,
-            ref: ref,
+            owner: core.getInput("owner", { required: true }),
+            repo: core.getInput("repo", { required: true }),
+            ref: core.getInput("ref", { required: true }),
             auto_merge: false,
             required_contexts: [],
             description: "deploy created by dictybot",
