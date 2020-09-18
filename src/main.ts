@@ -36,7 +36,7 @@ export const run = async (): Promise<void> => {
     core.setOutput("deployment-response", data)
     core.setOutput("upload-response", uploadResponse)
   } catch (error) {
-    core.setFailed(`action failed with error ${error}`)
+    core.setFailed(`action failed with error ${error.message}`)
   }
 }
 
