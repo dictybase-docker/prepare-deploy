@@ -1,0 +1,27 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "cybersiddhu",
+      "name": "Siddhartha Basu",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/48740?v=4",
+      "profile": "http://cybersiddhu.github.com/",
+      "contributions": [
+        "code",
+        "doc",
+        "test",
+        "maintenance"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "prepare-deploy",
+  "projectOwner": "dictybase-docker",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}
