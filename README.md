@@ -1,4 +1,5 @@
 # prepare deploy
+
 [![License](https://img.shields.io/badge/License-BSD%202--Clause-blue.svg)](LICENSE)   
 ![Continuous integration](https://github.com/dictybase-docker/prepare-deploy/workflows/Continuous%20integration/badge.svg)
 [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=dictybase-docker/prepare-deploy)](https://dependabot.com)   
@@ -21,6 +22,7 @@
 
 The `dictybase-docker/prepare-deploy` is a javascript action that triggers a [github deployment](https://developer.github.com/v3/repos/deployments/#create-a-deployment)
 for the same repository. The action is mainly designed to work with the following assumption..
+
 - For deploying in cloud hosted (such as gke, azure etc) `kubernetes` cluster. Defaults to `gke`.
 - The code will be deployed using [helm](https://helm.sh).
 - The `helm` chart exists in the same repository.
@@ -42,7 +44,9 @@ steps:
       ref: 483fjke81 #(or v1.2.3 or feat/hot-fuzz etc.)
       token: ${{ github.token }}
 ```
+
 It is recommended to run it after a test and build jobs(CI), for example...
+
 ```yaml
 name: Continuous build and prepare deploy
 on: 
@@ -84,6 +88,7 @@ jobs:
 ```
 
 ## Inputs
+
 The following inputs are supported.
 
 - `cluster-name` - (required) The name of kubernetes cluster where the code will be deployed.
@@ -102,6 +107,10 @@ The following inputs are supported.
 
 - `token` - (required) Github token for authentication.
 
+- `owner` - (required) Owner of the GitHub repository. (i.e. dictyBase)
+
+- `repo` - (required) Name of the GitHub repository. (i.e. dicty-frontpage)
+
 - `environment` - (optional) Runtime environment name. Default to development.
 
 - `artifact` - Name of upload artifact containing a file with the deployment payload. 
@@ -110,6 +119,7 @@ The following inputs are supported.
 
 
 ## Outputs
+
 The following outputs are supported.
 
 - `deployment-response` - Contain deployment payload in the output which can be accessed in any 
