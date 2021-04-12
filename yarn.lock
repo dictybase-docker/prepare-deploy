@@ -2,13 +2,13 @@
 # yarn lockfile v1
 
 
-"@actions/artifact@^0.5.0":
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/@actions/artifact/-/artifact-0.5.0.tgz#6882702d9cd961f240d7ce1d07106c1b9cb5e39f"
-  integrity sha512-uo9zlqm8sZBysFVaBZh8iAe2xNf9x2fDQZZMHiKyBEShvCB2S2nA4+Kt3Xsi9eG5O1E8fVMwEVuwLR3/Zy3mrA==
+"@actions/artifact@^0.5.1":
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/@actions/artifact/-/artifact-0.5.1.tgz#1eeea3236fd89e3f39f5a491649cb293c3872340"
+  integrity sha512-wKXEa4fhvgsw3kPu74F3J6eAi92rqv7BvpjEAmiqmDFeuDj6cyqWDWXx6axWfiBmmln1/LVf1DLWikbciKkoVQ==
   dependencies:
     "@actions/core" "^1.2.6"
-    "@actions/http-client" "^1.0.7"
+    "@actions/http-client" "^1.0.11"
     "@types/tmp" "^0.1.0"
     tmp "^0.1.0"
     tmp-promise "^2.0.2"
@@ -28,10 +28,10 @@
     "@octokit/plugin-paginate-rest" "^2.2.3"
     "@octokit/plugin-rest-endpoint-methods" "^4.0.0"
 
-"@actions/http-client@^1.0.7", "@actions/http-client@^1.0.8":
-  version "1.0.8"
-  resolved "https://registry.yarnpkg.com/@actions/http-client/-/http-client-1.0.8.tgz#8bd76e8eca89dc8bcf619aa128eba85f7a39af45"
-  integrity sha512-G4JjJ6f9Hb3Zvejj+ewLLKLf99ZC+9v+yCxoYf9vSyH+WkzPLB2LuUtRMGNkooMqdugGBFStIKXOuvH1W+EctA==
+"@actions/http-client@^1.0.11", "@actions/http-client@^1.0.8":
+  version "1.0.11"
+  resolved "https://registry.yarnpkg.com/@actions/http-client/-/http-client-1.0.11.tgz#c58b12e9aa8b159ee39e7dd6cbd0e91d905633c0"
+  integrity sha512-VRYHGQV1rqnROJqdMvGUbY/Kn8vriQe/F9HR2AlYHzmKuM/p3kjNuXhmdBfcVgsvRWTz5C5XW5xvndZrVBuAYg==
   dependencies:
     tunnel "0.0.6"
 
